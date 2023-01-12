@@ -1,45 +1,107 @@
-﻿namespace Genereics
+﻿namespace Generics_homework
+{ 
+class Program
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Adding<int, int> obj1 = new Adding<int, int>();
-            Console.WriteLine("int 6 + 9 = " + obj1.AddingFunction(6, 9));
-
-            Adding<char, char> obj2 = new Adding<char, char>();
-            Console.WriteLine("char a + b = " + (int)obj2.AddingFunction('a', 'b'));
-
-            Adding<int, char> obj3 = new Adding<int, char>();
-            Console.WriteLine("char 7 + b = " + obj3.AddingFunction(7, 'b'));
-
-            Adding<int, string> obj4 = new Adding<int, string>();
-            Console.WriteLine("7 + bkl = " + obj4.AddingFunction(7, "bkl"));
-
-            Adding<string, int> obj5 = new Adding<string, int>();
-            Console.WriteLine("bkl + 7 = " + obj5.AddingFunction("bkl", 7));
-
-
-
-            Console.ReadKey();
-        }
-    }
-    public class Adding<T, G>
+    static void Main(string[] args)
     {
 
-        //public T MyT { get; set; }
-        //public G MyG { get; set; }
+            Gen<int> MyGen = new Gen<int>();
+
+            int[] array = MyGen.CreateArr(6); // create array
+            Console.Write("Create array   -----  ");
+            MyGen.ShowArr(array);
+
+            Console.WriteLine();
+
+            int[] AddInArray = MyGen.AddIteminArr(array, 8);// add item in array
+            Console.Write("Add item in array   -----  ");
+
+            MyGen.ShowArr(AddInArray);
+
+            Console.WriteLine();
+
+            int[] AddAgain = MyGen.AddIteminArr(AddInArray, 15); // add again
+            Console.Write("Add item in array again   -----  ");
+            MyGen.ShowArr(AddAgain);
 
 
-        public dynamic AddingFunction(T first, G second)
+            Console.WriteLine();
+
+
+            int[] DeleteInArray = MyGen.DeleteIteminArr(AddAgain, 1); // Delete item
+            Console.Write("Delete item from  array   -----  ");
+            MyGen.ShowArr(DeleteInArray);
+
+        }
+    }
+    public class Gen <T>
+{
+        T obj;
+        public Gen()
         {
-            dynamic a = first;
-            dynamic b = second;
-            return a + b;
+
+        }
+        public Gen (T o)
+        {
+            obj = o;
         }
 
+        public T[] CreateArr(T o)
+        {
+            T[] arr = new T[] { o };
+            return arr;
+        }
+        public T[] AddIteminArr(T[] arr, T new_o)
+        {
 
+            T[] CopyArr = new T[arr.Length+1];
 
+            for (int i = 0; i < arr.Length; i++)
+            {
+                CopyArr[i] = arr[i];
 
-    }
+            }
+            CopyArr[CopyArr.Length-1] = new_o;
+
+            return CopyArr;
+
+        }
+        public T[] DeleteIteminArr(T[] arr, int index)
+        {
+            T[] CopyArr = new T[arr.Length - 1];
+
+            try
+            {
+                for (int i = 0; i < arr.Length-1; ++i)
+                {
+                   
+                        if (i != index)
+                         {
+                            CopyArr[i] = arr[i];
+                         }
+                        else
+                        {
+                        for (int j = i+1; j < arr.Length; j++)
+                        {
+                            CopyArr[i] = arr[j];
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message + "\nPlease try again");
+            }
+            return CopyArr;
+        }
+
+        public void ShowArr(T[] arr)
+        {
+            for (int i = 0; i < arr.Length; i++) {
+                Console.Write(arr[i] + ", ");
+            }
+        }
+
+}
 }
